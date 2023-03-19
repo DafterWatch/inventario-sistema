@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MenuComponent } from './menu/menu.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', component: MenuComponent },
+  { path: '', component: HomeComponent },
   { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) } // Agrega la ruta para el módulo de productos
 ];
 

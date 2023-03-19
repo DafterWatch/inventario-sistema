@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListComponent } from './list/list.component'; // Importa el componente de la lista de productos
+import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
-  { path: '', component: ListComponent } // Agrega la ruta para mostrar la lista de productos
+  { path: '', component: ProductListComponent }
 ];
 
 @NgModule({
