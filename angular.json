@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "inventario-sistema"
+  "defaultProject": "inventario-sistema",
+  "cli": {
+    "analytics": "90d6e52a-30aa-4b7e-843e-1c7bf1a0e0a9"
+  }
 }
