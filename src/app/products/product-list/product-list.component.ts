@@ -1,7 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../product';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -41,7 +41,6 @@ export class ProductListComponent implements OnInit {
   getProducts() {
     this.http.get('http://localhost:3000/products').subscribe(
       (response: any) => {
-        console.log(response)
         // Manejar la respuesta del servidor
         this.products = response; // respuesta del servidor
         this.filteredProducts = this.products; // listado para el buscador
@@ -50,5 +49,23 @@ export class ProductListComponent implements OnInit {
         console.error(error); // Manejar el error en caso de que ocurra
       }
     );
+  }
+  onDelete(id: number) {
+    Swal.fire({
+      title: 'Do you want to delete this row?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete('http://localhost:3000/products/' + id).subscribe(
+          () => {
+            Swal.fire('Deleted!', '', 'success');
+            this.getProducts();
+          },
+          (error) => console.error(error)
+        );
+      }
+    });
   }
 }

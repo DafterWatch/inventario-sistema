@@ -95,12 +95,12 @@
                 <button
                   type="button"
                   class="btn btn-primary m-1"
-                  routerLink="/new"
+                  [routerLink]="['/edit', product.id]"
                 >
                   Editar
                 </button>
-                <button type="button" class="btn btn-secondary m-1">
-                  Botón 2
+                <button type="button" class="btn btn-secondary m-1" (click)="onDelete(product.id)">
+                  Eliminar
                 </button>
               </div>
             </div>
