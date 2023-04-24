@@ -1,0 +1,63 @@
+<div class="container mt-4 w-50">
+  <form class="card p-3" [formGroup]="form" (submit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.value.name"
+        name="name"
+        formControlName="name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">URL de imagen</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.value.imageUrl"
+        name="imageUrl"
+        formControlName="imageUrl"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Descripción</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="form.value.description"
+        name="description"
+        formControlName="description"
+        required
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Cantidad</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="form.value.quantity"
+        name="quantity"
+        formControlName="quantity"
+        required
+      />
+    </div>
+    <div class="d-flex justify-content-center m-1">
+      <button
+        type="submit"
+        class="btn btn-primary m-1"
+        [disabled]="form.invalid"
+      >
+        Registrar
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary m-1"
+        routerLink="/products"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
