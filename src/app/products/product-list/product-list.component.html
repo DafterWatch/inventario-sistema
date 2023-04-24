@@ -44,49 +44,71 @@
         (keyup)="filterProducts()"
         class="form-control shadow-sm mb-3"
       />
-      <div class="card p-3" *ngIf="products && products.length && gridView">
-        <div
-          *ngFor="let product of filteredProducts"
-          class="col-lg-4 col-md-6 mb-4"
-        >
-          <div class="card h-100">
-            <img
-              class="card-img-top"
-              src="{{ product.imageUrl }}"
-              alt="{{ product.name }}"
-            />
-            <div class="card-body">
-              <div class="d-flex w-100 justify-content-between">
-                <h4 class="mb-1">{{ product.name }}</h4>
-                <h4>Cantidad: {{ product.quantity }}</h4>
+      <!--Vista Cuadriculada-->
+      <div class="card" *ngIf="products && products.length && gridView">
+        <div class="row p-3">
+          <div
+            *ngFor="let product of filteredProducts"
+            class="col-lg-4 col-md-6 mb-4"
+          >
+            <div class="card h-100">
+              <img
+                class="card-img-top"
+                src="{{ product.imageUrl }}"
+                alt="{{ product.name }}"
+              />
+              <div class="card-body">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5>{{ product.name }}</h5>
+                  <h5>
+                    <span class="text-primary">Cantidad: </span
+                    >{{ product.quantity }}
+                  </h5>
+                </div>
+                <p class="card-text">{{ product.description }}</p>
               </div>
-              <p class="card-text">{{ product.description }}</p>
-            </div>
-            <div class="d-flex justify-content-center m-2">
-              <button type="button" class="btn btn-primary m-1">Botón 1</button>
-              <button type="button" class="btn btn-secondary m-1">
-                Botón 2
-              </button>
+              <div class="d-flex justify-content-center m-2">
+                <button
+                  type="button"
+                  class="btn btn-primary m-1"
+                  [routerLink]="['/edit', product.id]"
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary m-1"
+                  (click)="onDelete(product.id)"
+                >
+                  Eliminar
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!--Vista Lista-->
       <div class="row" *ngIf="products && products.length && !gridView">
         <div class="col-md-12">
           <div class="list-group">
             <div
-              class="list-group-item d-flex align-items-center"
+              class="list-group-item d-flex align-items-center p-3"
               *ngFor="let product of filteredProducts"
             >
               <img
                 [src]="product.imageUrl"
                 alt="Imagen de {{ product.name }}"
                 class="img-thumbnail m-2 img-responsive"
+                height="100"
+                width="100"
               />
               <div class="w-100">
                 <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">{{ product.name }}</h5>
-                  <h5>Cantidad: {{ product.quantity }}</h5>
+                  <h5 class="mt-2">{{ product.name }}</h5>
+                  <h5 class="mt-2 me-2">
+                    <span class="text-primary">Cantidad: </span
+                    >{{ product.quantity }}
+                  </h5>
                 </div>
                 <p class="mb-1">{{ product.description }}</p>
               </div>
@@ -99,7 +121,11 @@
                 >
                   Editar
                 </button>
-                <button type="button" class="btn btn-secondary m-1" (click)="onDelete(product.id)">
+                <button
+                  type="button"
+                  class="btn btn-secondary m-1"
+                  (click)="onDelete(product.id)"
+                >
                   Eliminar
                 </button>
               </div>
@@ -107,6 +133,7 @@
           </div>
         </div>
       </div>
+      <!--Datos no encontrados-->
       <div *ngIf="showNoResults">
         No se encontraron resultados para "{{ searchTerm }}".
       </div>
@@ -115,6 +142,7 @@
           <p>No se encontraron productos.</p>
         </div>
       </div>
+      <!--Datos no encontrados-->
     </div>
   </div>
 </div>

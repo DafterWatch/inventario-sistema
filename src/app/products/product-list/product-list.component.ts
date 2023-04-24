@@ -43,6 +43,15 @@ export class ProductListComponent implements OnInit {
       (response: any) => {
         // Manejar la respuesta del servidor
         this.products = response; // respuesta del servidor
+        this.products.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          }
+          return 0;
+        }); // ordenar por name
         this.filteredProducts = this.products; // listado para el buscador
       },
       (error) => {
