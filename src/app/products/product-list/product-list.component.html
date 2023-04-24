@@ -54,7 +54,7 @@
             <div class="card h-100">
               <img
                 class="card-img-top"
-                src="{{ product.imageUrl }}"
+                src="{{ product.imageurl }}"
                 alt="{{ product.name }}"
               />
               <div class="card-body">
@@ -96,7 +96,7 @@
               *ngFor="let product of filteredProducts"
             >
               <img
-                [src]="product.imageUrl"
+                [src]="product.imageurl"
                 alt="Imagen de {{ product.name }}"
                 class="img-thumbnail m-2 img-responsive"
                 height="100"

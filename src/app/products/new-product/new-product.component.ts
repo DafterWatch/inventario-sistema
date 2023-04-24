@@ -8,6 +8,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-new-product',
@@ -30,7 +31,7 @@ export class NewProductComponent implements OnInit {
     this.form = fb.group({
       id: [0],
       name: ['', [Validators.required]],
-      imageUrl: ['', [Validators.required]],
+      imageurl: ['', [Validators.required]],
       description: ['', [Validators.required]],
       quantity: [0, [Validators.required]],
     });
@@ -40,13 +41,15 @@ export class NewProductComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isNew = false;
-      this.http.get('http://localhost:3000/products/' + id).subscribe(
+      this.http.get(environment.apiEndpoint + '/products/' + id).subscribe(
         (response: any) => {
           // Manejar la respuesta del servidor
+          console.log(response);
+
           this.form.patchValue({
             id: response.id,
             name: response.name,
-            imageUrl: response.imageUrl,
+            imageurl: response.imageurl,
             description: response.description,
             quantity: response.quantity,
           }); // datos id
@@ -63,32 +66,30 @@ export class NewProductComponent implements OnInit {
     if (this.isNew) {
       // post new product
       // Enviar los datos al servidor para grabar en la base de datos
-      this.http
-        .post('http://localhost:3000/products', this.form.value)
-        .subscribe(
-          (res) => {
-            //exito
-            Swal.fire({
-              icon: 'success',
-              title: 'Saved!',
-              text: '',
-            });
-            this.router.navigate(['/products']);
-          },
-          (error) => {
-            console.error(error);
-            // error
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-            });
-          }
-        );
+      this.http.post(environment.apiEndpoint + '/products', this.form.value).subscribe(
+        (res) => {
+          //exito
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved!',
+            text: '',
+          });
+          this.router.navigate(['/products']);
+        },
+        (error) => {
+          console.error(error);
+          // error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
+        }
+      );
     } else {
       // edit exist product
       this.http
-        .put('http://localhost:3000/products/' + this.form.value.id, this.form.value)
+        .put(environment.apiEndpoint + '/products/' + this.form.value.id, this.form.value)
         .subscribe(
           (res) => {
             console.log(res);

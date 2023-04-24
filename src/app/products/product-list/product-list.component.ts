@@ -2,6 +2,7 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../product';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -39,7 +40,7 @@ export class ProductListComponent implements OnInit {
     }
   }
   getProducts() {
-    this.http.get('http://localhost:3000/products').subscribe(
+    this.http.get(environment.apiEndpoint + '/products').subscribe(
       (response: any) => {
         // Manejar la respuesta del servidor
         this.products = response; // respuesta del servidor
@@ -67,7 +68,7 @@ export class ProductListComponent implements OnInit {
       confirmButtonText: 'Delete',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.http.delete('http://localhost:3000/products/' + id).subscribe(
+        this.http.delete(environment.apiEndpoint + '/products/' + id).subscribe(
           () => {
             Swal.fire('Deleted!', '', 'success');
             this.getProducts();
