@@ -1,7 +1,7 @@
 <div class="container">
   <div class="d-flex justify-content-between mb-4 mt-4">
     <h2>Productos</h2>
-    <div class="btn-group">
+    <div class="btn-group" *ngIf="products.length > 0">
       <button class="btn btn-primary" (click)="setListView()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,17 +32,19 @@
         </svg>
       </button>
     </div>
+    <button class="btn btn-primary" routerLink="/new">Crear Nuevo</button>
   </div>
   <div class="row">
     <div class="col-md-12">
       <input
+        *ngIf="products.length > 0"
         type="text"
         [(ngModel)]="searchTerm"
         placeholder="Buscar producto..."
         (keyup)="filterProducts()"
         class="form-control shadow-sm mb-3"
       />
-      <div class="row" *ngIf="products && products.length && gridView">
+      <div class="card p-3" *ngIf="products && products.length && gridView">
         <div
           *ngFor="let product of filteredProducts"
           class="col-lg-4 col-md-6 mb-4"
@@ -90,7 +92,11 @@
               </div>
 
               <div class="d-flex justify-content-center m-1">
-                <button type="button" class="btn btn-primary m-1" routerLink="/new">
+                <button
+                  type="button"
+                  class="btn btn-primary m-1"
+                  routerLink="/new"
+                >
                   Editar
                 </button>
                 <button type="button" class="btn btn-secondary m-1">
@@ -102,7 +108,7 @@
         </div>
       </div>
       <div *ngIf="showNoResults">
-        No se encontraron resultados para "{{ searchTerm }}"
+        No se encontraron resultados para "{{ searchTerm }}".
       </div>
       <div class="row" *ngIf="!products || !products.length">
         <div class="col-md-12">

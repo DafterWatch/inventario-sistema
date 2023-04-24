@@ -1,118 +1,35 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-
-  products = [
-    {
-      id: 1,
-      name: 'Producto 1',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 1',
-      quantity: 100,
-    },
-    {
-      id: 2,
-      name: 'Producto 2',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 3,
-      name: 'Producto 3',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 4,
-      name: 'Producto 4',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 5,
-      name: 'Producto 5',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 6,
-      name: 'Producto 6',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 7,
-      name: 'Producto 7',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 8,
-      name: 'Producto 8',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 9,
-      name: 'Producto 9',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'Descripción del producto 2',
-      quantity: 200,
-    },
-    {
-      id: 10,
-      name: 'Maze of Memory Display',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'MAZE - Display de 24 sobres',
-      quantity: 200,
-    },
-    {
-      id: 11,
-      name: 'Maze of Memory Sobre Individual',
-      imageUrl: 'https://via.placeholder.com/150',
-      description: 'MAZE - Sobre individual',
-      quantity: 200,
-    },
-  ];
-  filteredProducts:any[] = []
-  constructor() { }
-
-  ngOnInit(): void {
-    this.filteredProducts = this.products;
-  }
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes.searchTerm) {
-  //     this.filterProducts();
-  //   }
-  // }
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   showNoResults: boolean = false;
   gridView: boolean = false;
   searchTerm: string = '';
-
+  constructor(private http: HttpClient) {}
+  ngOnInit(): void {
+    // this.filteredProducts = this.products;
+    this.getProducts();
+  }
   setListView() {
     this.gridView = false;
   }
-
   setGridView() {
     this.gridView = true;
   }
   filterProducts() {
     const searchTermTrimmed = this.searchTerm.trim().toLowerCase();
-    this.filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(searchTermTrimmed) ||
-      product.description.toLowerCase().includes(searchTermTrimmed)
+    this.filteredProducts = this.products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchTermTrimmed) || // buscar por nombre
+        product.description.toLowerCase().includes(searchTermTrimmed) // buscar por descripcion
       //product.quantity.toString().includes(searchTermTrimmed)
     );
     if (this.filteredProducts.length === 0) {
@@ -121,5 +38,17 @@ export class ProductListComponent implements OnInit {
       this.showNoResults = false;
     }
   }
-
+  getProducts() {
+    this.http.get('http://localhost:3000/products').subscribe(
+      (response: any) => {
+        console.log(response)
+        // Manejar la respuesta del servidor
+        this.products = response; // respuesta del servidor
+        this.filteredProducts = this.products; // listado para el buscador
+      },
+      (error) => {
+        console.error(error); // Manejar el error en caso de que ocurra
+      }
+    );
+  }
 }
