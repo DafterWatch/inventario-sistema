@@ -1,21 +1,16 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import Swal from 'sweetalert2';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormsModule,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-new-product',
-  templateUrl: './new-product.component.html',
-  styleUrls: ['./new-product.component.scss'],
+  selector: 'app-new-client',
+  templateUrl: './new-client.component.html',
+  styleUrls: ['./new-client.component.scss']
 })
-export class NewProductComponent implements OnInit {
+export class NewClientComponent implements OnInit {
   form: FormGroup;
   name = '';
   imageUrl = '';
@@ -31,9 +26,8 @@ export class NewProductComponent implements OnInit {
     this.form = fb.group({
       id: [0],
       name: ['', [Validators.required]],
-      imageurl: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      quantity: [0, [Validators.required]],
+      lastName: ['', [Validators.required]],
+      ci: ['', [Validators.required]],
     });
   }
 
@@ -41,15 +35,14 @@ export class NewProductComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isNew = false;
-      this.http.get(environment.apiEndpoint + '/products/' + id).subscribe(
+      this.http.get(environment.apiEndpoint + '/clients/' + id).subscribe(
         (response: any) => {
           // Manejar la respuesta del servidor
           this.form.patchValue({
             id: response.id,
             name: response.name,
-            imageurl: response.imageurl,
-            description: response.description,
-            quantity: response.quantity,
+            lastName: response.lastname,
+            ci: response.ci,
           }); // datos id
         },
         (error) => {
@@ -61,10 +54,10 @@ export class NewProductComponent implements OnInit {
 
   onSubmit() {
     if (this.isNew) {
-      // post new product
+      // post new client
       // Enviar los datos al servidor para grabar en la base de datos
       this.http
-        .post(environment.apiEndpoint + '/products', this.form.value)
+        .post(environment.apiEndpoint + '/clients', this.form.value)
         .subscribe(
           (res) => {
             //exito
@@ -73,7 +66,7 @@ export class NewProductComponent implements OnInit {
               title: 'Saved!',
               text: '',
             });
-            this.router.navigate(['/products']);
+            this.router.navigate(['/clients']);
           },
           (error) => {
             console.error(error);
@@ -86,10 +79,10 @@ export class NewProductComponent implements OnInit {
           }
         );
     } else {
-      // edit exist product
+      // edit exist client
       this.http
         .put(
-          environment.apiEndpoint + '/products/' + this.form.value.id,
+          environment.apiEndpoint + '/clients/' + this.form.value.id,
           this.form.value
         )
         .subscribe(
@@ -100,7 +93,7 @@ export class NewProductComponent implements OnInit {
               title: 'Edited!',
               text: '',
             });
-            this.router.navigate(['/products']);
+            this.router.navigate(['/clients']);
           },
           (error) => console.error(error)
         );

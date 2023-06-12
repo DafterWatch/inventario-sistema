@@ -1,0 +1,49 @@
+<div class="container mt-4 w-100">
+  <form class="card p-3" [formGroup]="form" (submit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Nombres</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.value.name"
+        name="name"
+        formControlName="name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Apellidos</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.value.lastName"
+        name="lastName"
+        formControlName="lastName"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Carnet Identidad</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.value.ci"
+        name="ci"
+        formControlName="ci"
+        required
+      />
+    </div>
+    <div class="d-flex justify-content-center m-1">
+      <button
+        type="submit"
+        class="btn btn-primary m-1"
+        [disabled]="form.invalid"
+      >
+        Registrar
+      </button>
+      <button type="button" class="btn btn-secondary m-1" routerLink="/clients">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

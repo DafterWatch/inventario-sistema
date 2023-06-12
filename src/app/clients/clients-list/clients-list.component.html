@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="d-flex justify-content-between mb-4 mt-4">
+    <h2>Clientes</h2>
+    <button class="btn btn-primary" routerLink="new">Crear Nuevo</button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <input
+        *ngIf="clients.length > 0"
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar cliente..."
+        (keyup)="filterClients()"
+        class="form-control shadow-sm mb-3"
+      />
+      <!--Vista Lista-->
+      <div class="row" *ngIf="clients && clients.length">
+        <div class="col-md-12">
+          <div class="list-group">
+            <div
+              class="list-group-item d-flex align-items-center p-3"
+              *ngFor="let client of filteredClients"
+            >
+              <div class="container">
+                <div class="row">
+                  <div class="col-8">
+                    <!-- Inicio contenido -->
+                    <div class="w-100">
+                      <h5 class="mt-2">
+                        {{ client.name }} {{ client.lastname }} -
+                        {{ client.ci }}
+                      </h5>
+                    </div>
+                    <!-- Final contenido -->
+                  </div>
+                  <div class="col-4 d-flex justify-content-end">
+                    <!-- Inicio botones -->
+                    <button
+                      type="button"
+                      class="btn btn-primary m-1"
+                      [routerLink]="['edit', client.id]"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary m-1"
+                      (click)="onDelete(client.id)"
+                    >
+                      Eliminar
+                    </button>
+                    <!-- Final botones -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Datos no encontrados-->
+      <div *ngIf="showNoResults">
+        No se encontraron resultados para "{{ searchTerm }}".
+      </div>
+      <div class="row" *ngIf="!clients || !clients.length">
+        <div class="col-md-12">
+          <p>No se encontraron productos.</p>
+        </div>
+      </div>
+      <!--Datos no encontrados-->
+    </div>
+  </div>
+</div>
