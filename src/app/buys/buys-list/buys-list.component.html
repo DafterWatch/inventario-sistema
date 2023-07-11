@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="d-flex justify-content-between mb-4 mt-4">
+    <h2>Ventas</h2>
+    <!-- <button class="btn btn-primary" routerLink="new">Crear Nuevo</button> -->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <input
+        *ngIf="buys.length > 0"
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar venta..."
+        (keyup)="filterBuys()"
+        class="form-control shadow-sm mb-3"
+      />
+      <!--Vista Lista-->
+      <!-- <div class="row" *ngIf="buys && buys.length">
+        <div class="col-md-12">
+          <div class="list-group">
+            <div
+              class="list-group-item d-flex align-items-center p-3"
+              *ngFor="let buy of filteredBuys"
+            >
+              <div class="container">
+                <div class="row">
+                  <div class="col-8">
+                    <div class="w-100">
+                      <h5 class="mt-2">
+                        Producto: {{ buy.name }} / Cantidad: {{ buy.quantity }} /
+                        Precio: {{ buy.price }} / Fecha Venta: {{ buy.datebuy | date:'yyyy-MM-dd' }}
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <!--Vista Tabla-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Fecha Venta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let buy of filteredBuys">
+            <td>{{ buy.name }}</td>
+            <td>{{ buy.quantity }}</td>
+            <td>{{ buy.price }}</td>
+            <td>{{ buy.datebuy | date:'yyyy-MM-dd' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--Datos no encontrados-->
+      <div *ngIf="showNoResults">
+        No se encontraron resultados para "{{ searchTerm }}".
+      </div>
+      <div class="row" *ngIf="!buys || !buys.length">
+        <div class="col-md-12">
+          <p>No se encontraron ventas.</p>
+        </div>
+      </div>
+      <!--Datos no encontrados-->
+    </div>
+  </div>
+</div>
