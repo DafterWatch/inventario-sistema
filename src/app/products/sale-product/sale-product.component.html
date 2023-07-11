@@ -1,0 +1,92 @@
+<!-- app.component.html -->
+<div class="container mt-3">
+  <h2>Venta Producto</h2>
+  <form class="card p-3" [formGroup]="form" (submit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Imagen:</label>
+          <div
+            style="
+              max-width: 500px;
+              max-height: 500px;
+              min-width: 300px;
+              min-height: 300px;
+              overflow: hidden;
+            "
+          >
+            <img
+              src="{{ form.value.imageurl }}"
+              alt="Product Image"
+              class="img-thumbnail"
+            />
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <h4>Nombre Producto:</h4>
+          <p>{{ form.value.name }}</p>
+        </div>
+        <div class="form-group">
+          <h4>Descripción:</h4>
+          <p>{{ form.value.description }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <h4>Cantidad Disponible:</h4>
+          <p>{{ form.value.quantity }} Unidades</p>
+        </div>
+        <div class="form-group">
+          <h4 for="productPrice">Precio:</h4>
+          <p>{{ form.value.price }} Bs</p>
+        </div>
+
+        <div class="form-group">
+          <h4>Cantidad a comprar:</h4>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="form.value.quantityToBuy"
+            name="quantityToBuy"
+            formControlName="quantityToBuy"
+            required
+          />
+        </div>
+        <div
+          *ngIf="
+            form.controls.quantityToBuy.invalid &&
+            (form.controls.quantityToBuy.dirty ||
+              form.controls.quantityToBuy.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="form.controls.quantityToBuy.errors?.required">
+            La cantidad es requerida.
+          </div>
+          <div *ngIf="form.controls.quantityToBuy.errors?.min">
+            La cantidad debe ser mayor a 0.
+          </div>
+          <div *ngIf="form.controls.quantityToBuy.errors?.pattern">
+            La cantidad debe ser un número entero sin decimales.
+          </div>
+        </div>
+        <div class="d-flex justify-content-left mt-1">
+          <button
+            type="submit"
+            class="btn btn-primary m-1"
+            [disabled]="form.invalid"
+          >
+            Vender
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary m-1"
+            routerLink="/products"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

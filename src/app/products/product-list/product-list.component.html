@@ -74,6 +74,13 @@
               <div class="d-flex justify-content-center m-2">
                 <button
                   type="button"
+                  class="btn btn-success m-1"
+                  [routerLink]="['/sale', product.id]"
+                >
+                  Vender
+                </button>
+                <button
+                  type="button"
                   class="btn btn-primary m-1"
                   [routerLink]="['/edit', product.id]"
                 >
@@ -131,6 +138,13 @@
                       >{{ product.price }}
                     </h5>
                     <!--inicio botones-->
+                    <button
+                      type="button"
+                      class="btn btn-success m-1"
+                      [routerLink]="['sale', product.id]"
+                    >
+                      Vender
+                    </button>
                     <button
                       type="button"
                       class="btn btn-primary m-1"

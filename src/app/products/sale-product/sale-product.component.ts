@@ -6,16 +6,19 @@ import {
   FormGroup,
   Validators,
   FormsModule,
+  AbstractControl,
+  ValidationErrors,
+  FormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-new-product',
-  templateUrl: './new-product.component.html',
-  styleUrls: ['./new-product.component.scss'],
+  selector: 'app-sale-product',
+  templateUrl: './sale-product.component.html',
+  styleUrls: ['./sale-product.component.scss'],
 })
-export class NewProductComponent implements OnInit {
+export class SaleProductComponent implements OnInit {
   form: FormGroup;
   name = '';
   imageUrl = '';
@@ -31,11 +34,15 @@ export class NewProductComponent implements OnInit {
   ) {
     this.form = fb.group({
       id: [0],
-      name: ['', [Validators.required]],
-      imageurl: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      quantity: [0, [Validators.required]],
-      price: [0, [Validators.required]],
+      name: [''],
+      imageurl: [''],
+      description: [''],
+      quantity: [0],
+      price: [0],
+      quantityToBuy: [
+        '',
+        [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
+      ],
     });
   }
 
@@ -54,7 +61,7 @@ export class NewProductComponent implements OnInit {
             quantity: response.quantity,
             price: response.price,
           }); // datos id
-
+          console.log(this.form.value);
         },
         (error) => {
           console.error(error); // Manejar el error en caso de que ocurra
@@ -62,13 +69,18 @@ export class NewProductComponent implements OnInit {
       );
     }
   }
-
   onSubmit() {
-    if (this.isNew) {
-      // post new product
-      // Enviar los datos al servidor para grabar en la base de datos
+    // post sale product
+    // Enviar los datos al servidor para grabar en la base de datos
+    if (this.form.value.quantityToBuy <= this.form.value.quantity) {
+      // realizar compra
       this.http
-        .post(environment.apiEndpoint + '/products', this.form.value)
+        .post(environment.apiEndpoint + '/buys', {
+          idproduct: this.form.value.id,
+          quantity: this.form.value.quantityToBuy,
+          datebuy: new Date().toISOString().split('T')[0],
+          price: this.form.value.price
+        })
         .subscribe(
           (res) => {
             //exito
@@ -90,24 +102,9 @@ export class NewProductComponent implements OnInit {
           }
         );
     } else {
-      // edit exist product
-      this.http
-        .put(
-          environment.apiEndpoint + '/products/' + this.form.value.id,
-          this.form.value
-        )
-        .subscribe(
-          (res) => {
-            //exito
-            Swal.fire({
-              icon: 'success',
-              title: 'Edited!',
-              text: '',
-            });
-            this.router.navigate(['/products']);
-          },
-          (error) => console.error(error)
-        );
+      alert(
+        'La cantidad a comprar no puede ser mayor a la cantidad disponible'
+      );
     }
   }
 }
