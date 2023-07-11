@@ -54,7 +54,7 @@
             <div class="card h-100">
               <img
                 class="card-img-top"
-                src="{{ product.imageurl }}"
+                src="{{ product.imageUrl }}"
                 alt="{{ product.name }}"
               />
               <div class="card-body">
@@ -63,6 +63,10 @@
                   <h5>
                     <span class="text-primary">Cantidad: </span
                     >{{ product.quantity }}
+                  </h5>
+                  <h5>
+                    <span class="text-primary">Precio: </span
+                    >{{ product.price }}
                   </h5>
                 </div>
                 <p class="card-text">{{ product.description }}</p>
@@ -95,38 +99,39 @@
               class="list-group-item d-flex align-items-center p-3"
               *ngFor="let product of filteredProducts"
             >
-            <div class="container">
-              <div class="row">
-                <div class="col">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <img
+                      [src]="product.imageUrl"
+                      alt="Imagen de {{ product.name }}"
+                      class="img-thumbnail m-2 img-responsive"
+                      height="100"
+                      width="100"
+                    />
+                  </div>
+                  <div class="col">
+                    <!--inicio contenido-->
 
-                  <img
-                    [src]="product.imageurl"
-                    alt="Imagen de {{ product.name }}"
-                    class="img-thumbnail m-2 img-responsive"
-                    height="100"
-                    width="100"
-                  />
+                    <div class="w-100">
+                      <h5 class="mt-2">{{ product.name }}</h5>
 
-                </div>
-                <div class="col">
-                  <!--inicio contenido-->
+                      <p class="mb-1">{{ product.description }}</p>
+                    </div>
 
-                  <div class="w-100">
-
-                    <h5 class="mt-2">{{ product.name }}</h5>
-
-                  <p class="mb-1">{{ product.description }}</p>
-                </div>
-
-                  <!--final contenido-->
-                </div>
-                <div class="col">
-                  <h5 class="mt-2 me-2">
-                    <span class="text-primary">Cantidad: </span
-                    >{{ product.quantity }}
-                  </h5>
-                  <!--inicio botones-->
-                      <button
+                    <!--final contenido-->
+                  </div>
+                  <div class="col">
+                    <h5 class="mt-2 me-2">
+                      <span class="text-primary">Cantidad: </span
+                      >{{ product.quantity }}
+                    </h5>
+                    <h5 class="mt-2 me-2">
+                      <span class="text-primary">Precio: </span
+                      >{{ product.price }}
+                    </h5>
+                    <!--inicio botones-->
+                    <button
                       type="button"
                       class="btn btn-primary m-1"
                       [routerLink]="['edit', product.id]"
@@ -140,13 +145,10 @@
                     >
                       Eliminar
                     </button>
-                  <!--final botones-->
+                    <!--final botones-->
+                  </div>
                 </div>
               </div>
-            </div>
-
-
-
             </div>
           </div>
         </div>

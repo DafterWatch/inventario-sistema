@@ -21,6 +21,7 @@ export class NewProductComponent implements OnInit {
   imageUrl = '';
   description = '';
   quantity = 0;
+  price = 0;
   isNew: boolean = true;
   constructor(
     private fb: FormBuilder,
@@ -34,6 +35,7 @@ export class NewProductComponent implements OnInit {
       imageurl: ['', [Validators.required]],
       description: ['', [Validators.required]],
       quantity: [0, [Validators.required]],
+      price: [0, [Validators.required]],
     });
   }
 
@@ -50,7 +52,9 @@ export class NewProductComponent implements OnInit {
             imageurl: response.imageurl,
             description: response.description,
             quantity: response.quantity,
+            price: response.price,
           }); // datos id
+
         },
         (error) => {
           console.error(error); // Manejar el error en caso de que ocurra
