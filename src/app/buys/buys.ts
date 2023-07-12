@@ -4,4 +4,5 @@ export interface Buys {
   quantity: number;
   price: number;
   datebuy: Date;
+  montpayed: number;
 }

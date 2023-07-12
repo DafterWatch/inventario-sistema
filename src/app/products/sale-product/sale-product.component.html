@@ -37,8 +37,16 @@
           <p>{{ form.value.quantity }} Unidades</p>
         </div>
         <div class="form-group">
-          <h4 for="productPrice">Precio:</h4>
+          <h4 for="productPrice">Precio Unidad:</h4>
           <p>{{ form.value.price }} Bs</p>
+        </div>
+        <div class="form-group">
+          <h4 for="productPrice">Precio Total:</h4>
+          <p>{{ form.value.price * form.value.quantityToBuy }} Bs</p>
+        </div>
+        <div class="form-group" *ngIf="isDebt">
+          <h4 for="productPrice">Monto Total Deuda:</h4>
+          <p>{{ ((form.value.price * form.value.quantityToBuy) - form.value.montPayed) }} Bs</p>
         </div>
 
         <div class="form-group">
@@ -70,21 +78,64 @@
             La cantidad debe ser un número entero sin decimales.
           </div>
         </div>
-        <div class="d-flex justify-content-left mt-1">
-          <button
-            type="submit"
-            class="btn btn-primary m-1"
-            [disabled]="form.invalid"
-          >
-            Vender
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary m-1"
-            routerLink="/products"
-          >
-            Cancelar
-          </button>
+        <div class="form-group mt-1 mb-1">
+          <h4>Monto Cancelado:</h4>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="form.value.montPayed"
+            name="montPayed"
+            formControlName="montPayed"
+            required
+          />
+        </div>
+        <div
+          *ngIf="
+            form.controls.montPayed.invalid &&
+            (form.controls.montPayed.dirty ||
+              form.controls.montPayed.touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="form.controls.montPayed.errors?.required">
+            El monto cancelado es requerido.
+          </div>
+          <div *ngIf="form.controls.montPayed.errors?.min">
+            El monto cancelado debe ser minimo 0 bs.
+          </div>
+          <div *ngIf="form.controls.montPayed.errors?.pattern">
+            El monto cancelado debe ser un número entero sin decimales.
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-left mt-1">
+            <button
+              type="submit"
+              class="btn btn-primary m-1"
+              [disabled]="form.invalid"
+            >
+              Vender
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary m-1"
+              routerLink="/products"
+            >
+              Cancelar
+            </button>
+          </div>
+          <div class="form-check mt-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+              (click)="prestamoBuy($event)"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              ¿Prestamo?
+            </label>
+          </div>
         </div>
       </div>
     </div>

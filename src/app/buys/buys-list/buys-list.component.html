@@ -43,16 +43,20 @@
           <tr>
             <th scope="col">Producto</th>
             <th scope="col">Cantidad</th>
-            <th scope="col">Precio</th>
+            <th scope="col">Precio Unidad</th>
+            <th scope="col">Total</th>
+            <th scope="col">Monto Cancelado</th>
             <th scope="col">Fecha Venta</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let buy of filteredBuys">
             <td>{{ buy.name }}</td>
-            <td>{{ buy.quantity }}</td>
-            <td>{{ buy.price }}</td>
-            <td>{{ buy.datebuy | date:'yyyy-MM-dd' }}</td>
+            <td>{{ buy.quantity }} Unidades</td>
+            <td>{{ buy.price }} Bs</td>
+            <td>{{ buy.quantity * buy.price }} Bs</td>
+            <td>{{ buy.montpayed }} Bs</td>
+            <td>{{ buy.datebuy | date:'dd-MM-yyyy' }}</td>
           </tr>
         </tbody>
       </table>

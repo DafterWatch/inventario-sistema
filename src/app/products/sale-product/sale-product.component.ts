@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Client } from 'src/app/clients/client';
 
 @Component({
   selector: 'app-sale-product',
@@ -26,6 +27,8 @@ export class SaleProductComponent implements OnInit {
   quantity = 0;
   price = 0;
   isNew: boolean = true;
+  isDebt: boolean = false;
+  clients: Client[] = [];
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -39,15 +42,22 @@ export class SaleProductComponent implements OnInit {
       description: [''],
       quantity: [0],
       price: [0],
+      montPayed: [
+        0,
+        [Validators.required, Validators.min(0), Validators.pattern(/^\d+$/)],
+      ],
       quantityToBuy: [
-        '',
+        0,
         [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
       ],
     });
   }
-
+  prestamoBuy(checkStatus: any) {
+    this.isDebt = checkStatus.target.checked;
+  }
   ngOnInit(): void {
     let id = this.route.snapshot.paramMap.get('id');
+    this.getClients()
     if (id) {
       this.isNew = false;
       this.http.get(environment.apiEndpoint + '/products/' + id).subscribe(
@@ -61,7 +71,6 @@ export class SaleProductComponent implements OnInit {
             quantity: response.quantity,
             price: response.price,
           }); // datos id
-          console.log(this.form.value);
         },
         (error) => {
           console.error(error); // Manejar el error en caso de que ocurra
@@ -73,38 +82,81 @@ export class SaleProductComponent implements OnInit {
     // post sale product
     // Enviar los datos al servidor para grabar en la base de datos
     if (this.form.value.quantityToBuy <= this.form.value.quantity) {
-      // realizar compra
-      this.http
-        .post(environment.apiEndpoint + '/buys', {
-          idproduct: this.form.value.id,
-          quantity: this.form.value.quantityToBuy,
-          datebuy: new Date().toISOString().split('T')[0],
-          price: this.form.value.price
-        })
-        .subscribe(
-          (res) => {
-            //exito
-            Swal.fire({
-              icon: 'success',
-              title: 'Saved!',
-              text: '',
-            });
-            this.router.navigate(['/products']);
-          },
-          (error) => {
-            console.error(error);
-            // error
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-            });
-          }
-        );
+      if (
+        this.form.value.montPayed <=
+        (this.form.value.price * this.form.value.quantityToBuy)
+      ) {
+        if (this.isDebt) {
+          console.log('si ft prestamo');
+        } else if (
+          this.form.value.montPayed ==
+          (this.form.value.price * this.form.value.quantityToBuy)
+        ) {
+          // venta post
+          this.ventaPost()
+        } else {
+          alert('El monto a cancelar debe ser igual al pago total');
+        }
+      } else {
+        alert('El monto cancelado no puede ser superior del total a pagar');
+      }
     } else {
       alert(
         'La cantidad a comprar no puede ser mayor a la cantidad disponible'
       );
     }
+  }
+  ventaPost() {
+    // realizar compra
+    this.http
+      .post(environment.apiEndpoint + '/buys', {
+        idproduct: this.form.value.id,
+        quantity: this.form.value.quantityToBuy,
+        datebuy: new Date().toISOString().split('T')[0],
+        price: this.form.value.price,
+        montpayed: this.form.value.montPayed,
+      })
+      .subscribe(
+        (res) => {
+          //exito
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved!',
+            text: '',
+          });
+          this.router.navigate(['/products']);
+        },
+        (error) => {
+          console.error(error);
+          // error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
+        }
+      );
+  }
+  getClients() {
+    this.http.get(environment.apiEndpoint + '/clients').subscribe(
+      (response: any) => {
+        // Manejar la respuesta del servidor
+        this.clients = response; // respuesta del servidor
+        this.clients.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          }
+          return 0;
+        }); // ordenar por name
+        console.log(this.clients);
+
+      },
+      (error) => {
+        console.error(error); // Manejar el error en caso de que ocurra
+      }
+    );
   }
 }
