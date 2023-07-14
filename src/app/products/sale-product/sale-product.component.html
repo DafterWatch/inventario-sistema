@@ -48,8 +48,27 @@
           <h4 for="productPrice">Monto Total Deuda:</h4>
           <p>{{ ((form.value.price * form.value.quantityToBuy) - form.value.montPayed) }} Bs</p>
         </div>
-
-        <div class="form-group">
+        <div class="form-group mb-2" *ngIf="isDebt">
+          <h4>Carnet Cliente:</h4>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="form.value.ciclient"
+            name="idclient"
+            formControlName="ciclient"
+            list="list-clients"
+            id="input-datalist"
+            (change)="saveCode($event)"
+          />
+          <datalist id="list-clients">
+            <option *ngFor="let c of clients" [value]="c.ci" >{{c.ci}} - {{c.name}}</option>
+          </datalist>
+        </div>
+        <div class="form-group mb-2" *ngIf="form.value.nameclient!=''">
+          <h4 for="productPrice">Nombre Cliente:</h4>
+          <p>{{ form.value.nameclient }}</p>
+        </div>
+        <div class="form-group mb-2">
           <h4>Cantidad a comprar:</h4>
           <input
             type="number"

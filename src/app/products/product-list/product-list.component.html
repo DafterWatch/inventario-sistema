@@ -76,8 +76,17 @@
                   type="button"
                   class="btn btn-success m-1"
                   [routerLink]="['/sale', product.id]"
+                  *ngIf="product.quantity > 0"
                 >
                   Vender
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success m-1"
+                  *ngIf="product.quantity <= 0"
+                  disabled
+                >
+                  Agotado
                 </button>
                 <button
                   type="button"
@@ -142,8 +151,17 @@
                       type="button"
                       class="btn btn-success m-1"
                       [routerLink]="['sale', product.id]"
+                      *ngIf="product.quantity > 0"
                     >
                       Vender
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-success m-1"
+                      *ngIf="product.quantity <= 0"
+                      disabled
+                    >
+                      Agotado
                     </button>
                     <button
                       type="button"
