@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="d-flex justify-content-between mb-4 mt-4">
+    <h2>Prestamos</h2>
+    <!-- <button class="btn btn-primary" routerLink="new">Crear Nuevo</button> -->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <input
+        *ngIf="debts.length > 0"
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar prestamo..."
+        (keyup)="filterDebts()"
+        class="form-control shadow-sm mb-3"
+      />
+      <!--Vista Tabla-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Dueda Saldo</th>
+            <th scope="col">Total Cancelado</th>
+            <th scope="col">Nombre Cliente</th>
+            <th scope="col">CI Cliente</th>
+            <th scope="col">Fecha Prestamo</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let debt of filteredDebts">
+            <td>{{ debt.productname }}</td>
+            <td>{{ debt.quantity }} Unidades</td>
+            <td>{{ debt.debtamount }} Bs</td>
+            <td>{{ debt.paidamount }} Bs</td>
+            <td>{{ debt.nameclient }} {{ debt.lastname }}</td>
+            <td>{{ debt.ci }}</td>
+            <td>{{ debt.datebuy | date : "dd-MM-yyyy" }}</td>
+            <td *ngIf="debt.debtamount == debt.paidamount"><span class="badge bg-success">Deuda Pagada</span></td>
+            <td *ngIf="debt.debtamount != debt.paidamount"><span class="badge bg-danger">Deuda Vigente</span></td>
+            <td><button
+              type="button"
+              class="btn btn-primary m-1"
+              [routerLink]="['edit', debt.id]"
+            >
+              Editar
+            </button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--Datos no encontrados-->
+      <div *ngIf="showNoResults">
+        No se encontraron resultados para "{{ searchTerm }}".
+      </div>
+      <div class="row" *ngIf="!debts || !debts.length">
+        <div class="col-md-12">
+          <p>No se encontraron ventas.</p>
+        </div>
+      </div>
+      <!--Datos no encontrados-->
+    </div>
+  </div>
+</div>
