@@ -49,6 +49,8 @@ export class ClientsListComponent implements OnInit {
           return 0;
         }); // ordenar por name
         this.filteredClients = this.clients; // listado para el buscador
+        console.log(this.filteredClients);
+
       },
       (error) => {
         console.error(error); // Manejar el error en caso de que ocurra

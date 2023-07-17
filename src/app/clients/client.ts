@@ -3,4 +3,5 @@ export interface Client {
   name: string;
   lastname: string;
   ci: string;
+  hasdebt?:boolean;
 }

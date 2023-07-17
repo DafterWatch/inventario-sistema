@@ -14,7 +14,7 @@
         class="form-control shadow-sm mb-3"
       />
       <!--Vista Lista-->
-      <div class="row" *ngIf="clients && clients.length">
+      <!-- <div class="row" *ngIf="clients && clients.length">
         <div class="col-md-12">
           <div class="list-group">
             <div
@@ -24,17 +24,15 @@
               <div class="container">
                 <div class="row">
                   <div class="col-8">
-                    <!-- Inicio contenido -->
                     <div class="w-100">
                       <h5 class="mt-2">
                         {{ client.name }} {{ client.lastname }} -
                         {{ client.ci }}
                       </h5>
                     </div>
-                    <!-- Final contenido -->
                   </div>
                   <div class="col-4 d-flex justify-content-end">
-                    <!-- Inicio botones -->
+
                     <button
                       type="button"
                       class="btn btn-primary m-1"
@@ -49,15 +47,52 @@
                     >
                       Eliminar
                     </button>
-                    <!-- Final botones -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
+      </div> -->
+      <!--Vista Tabla-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre Cliente</th>
+            <th scope="col">CI</th>
+            <th scope="col">Deuda Pendiente</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of filteredClients">
+            <td>{{ client.name }} {{ client.lastname }}</td>
+            <td>{{ client.ci }}</td>
+            <td *ngIf="!client.hasdebt">
+              <span class="badge bg-success">Sin Deuda Pendiente</span>
+            </td>
+            <td *ngIf="client.hasdebt">
+              <span class="badge bg-danger">Deuda Pendiente</span>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary m-1"
+                [routerLink]="['edit', client.id]"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary m-1"
+                (click)="onDelete(client.id)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <!--Datos no encontrados-->
       <div *ngIf="showNoResults">
         No se encontraron resultados para "{{ searchTerm }}".
