@@ -43,16 +43,18 @@ export class NewTournamentComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isNew = false;
-      this.http.get(environment.apiEndpoint + '/products/' + id).subscribe(
+      this.http.get(environment.apiEndpoint + '/tournaments/' + id).subscribe(
         (response: any) => {
           // Manejar la respuesta del servidor
           this.form.patchValue({
             id: response.id,
-            name: response.name,
-            imageurl: response.imageUrl,
-            description: response.description,
-            quantity: response.quantity,
-            price: response.price,
+            idclient: response.idclient,
+            nameclient: response.name,
+            lastname: response.lastname,
+            ci: response.ci,
+            award: response.award,
+            received: response.received,
+            dateaward: response.dateaward,
           }); // datos id
 
         },
@@ -139,7 +141,12 @@ export class NewTournamentComponent implements OnInit {
     this.http
     .put(
       environment.apiEndpoint + '/tournaments/' + this.form.value.id,
-      this.form.value
+      {
+        idclient: this.form.value.idclient,
+        award: this.form.value.award,
+        received: this.form.value.received,
+        dateaward: this.form.value.dateaward,
+      }
     )
     .subscribe(
       (res) => {
@@ -149,7 +156,7 @@ export class NewTournamentComponent implements OnInit {
           title: 'Edited!',
           text: '',
         });
-        this.router.navigate(['/products']);
+        this.router.navigate(['/tournaments']);
       },
       (error) => console.error(error)
     );

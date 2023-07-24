@@ -32,7 +32,7 @@ export class NewProductComponent implements OnInit {
     this.form = fb.group({
       id: [0],
       name: ['', [Validators.required]],
-      imageurl: ['', [Validators.required]],
+      imageurl: ['../../../assets/images/black.jpg'],
       description: ['', [Validators.required]],
       quantity: [0, [Validators.required]],
       price: [0, [Validators.required]],
