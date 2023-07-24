@@ -1,0 +1,58 @@
+<div class="container mt-4 w-100">
+  <form class="card p-3" [formGroup]="form" (submit)="onSubmit()">
+    <div class="form-group mb-3">
+      <h4>Carnet Cliente:</h4>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.value.ci"
+        name="idclient"
+        formControlName="ci"
+        list="list-clients"
+        id="input-datalist"
+        (change)="saveCode($event)"
+      />
+      <datalist id="list-clients">
+        <option *ngFor="let c of clients" [value]="c.ci" >{{c.ci}} - {{c.name}}</option>
+      </datalist>
+    </div>
+    <div class="mb-1" *ngIf="form.value.ci != ''">
+      <div class="form-group">
+        <h4>Nombre Cliente:</h4>
+        <p>{{ form.value.nameclient }} {{ form.value.lastname }}</p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <h4 class="form-label">Descripción</h4>
+      <textarea
+        class="form-control"
+        [(ngModel)]="form.value.award"
+        name="award"
+        formControlName="award"
+        required
+      ></textarea>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="received" formControlName="received">
+      <h5 class="form-check-label" for="received">
+        Cancelado
+      </h5>
+    </div>
+    <div class="d-flex justify-content-center m-1">
+      <button
+        type="submit"
+        class="btn btn-primary m-1"
+        [disabled]="form.invalid"
+      >
+        Registrar
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary m-1"
+        routerLink="/tournaments"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

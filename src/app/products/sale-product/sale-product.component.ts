@@ -91,7 +91,7 @@ export class SaleProductComponent implements OnInit {
       ) {
         if (this.isDebt) {
           // venta ft prestamo
-          if(this.form.value.ciclient != 0 && this.form.value.nameclient != "" && this.form.value.ciclient != ""){
+          if(this.form.value.idclient != 0 && this.form.value.nameclient != "" && this.form.value.ciclient != ""){
             this.ventaDebtPost()
           } else {
             alert('Tiene que seleccionar un usuario en el campo del ci de clientes registrados, si no aparece porfavor registre al cliente')

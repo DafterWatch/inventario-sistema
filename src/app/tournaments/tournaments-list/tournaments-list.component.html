@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="d-flex justify-content-between mb-4 mt-4">
+    <h2>Torneos</h2>
+    <button class="btn btn-primary" routerLink="new">Crear Nuevo</button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <input
+        *ngIf="tournaments.length > 0"
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar prestamo..."
+        (keyup)="filterTournaments()"
+        class="form-control shadow-sm mb-3"
+      />
+      <!--Vista Tabla-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre Cliente</th>
+            <th scope="col">CI Cliente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha Prestamo</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tour of filteredTournaments">
+            <td>{{ tour.name }} {{ tour.lastname }}</td>
+            <td>{{ tour.ci }}</td>
+            <td>{{ tour.award }}</td>
+            <td>{{ tour.dateaward | date : "dd-MM-yyyy" }}</td>
+            <td *ngIf="tour.received"><span class="badge bg-success">Cancelado</span></td>
+            <td *ngIf="!tour.received"><span class="badge bg-danger">No cancelado</span></td>
+            <td><button
+              type="button"
+              class="btn btn-primary m-1"
+              [routerLink]="['edit', tour.id]"
+            >
+              Editar
+            </button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--Datos no encontrados-->
+      <div *ngIf="showNoResults">
+        No se encontraron resultados para "{{ searchTerm }}".
+      </div>
+      <div class="row" *ngIf="!tournaments || !tournaments.length">
+        <div class="col-md-12">
+          <p>No se encontraron ventas.</p>
+        </div>
+      </div>
+      <!--Datos no encontrados-->
+    </div>
+  </div>
+</div>
