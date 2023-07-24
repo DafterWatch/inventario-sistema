@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class NewClientComponent implements OnInit {
   form: FormGroup;
+  title = 'Registrar Nuevo Cliente'
   name = '';
   imageUrl = '';
   description = '';
@@ -32,9 +33,11 @@ export class NewClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.title = 'Registrar Nuevo Cliente'
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isNew = false;
+      this.title = 'Editar Cliente'
       this.http.get(environment.apiEndpoint + '/clients/' + id).subscribe(
         (response: any) => {
           // Manejar la respuesta del servidor

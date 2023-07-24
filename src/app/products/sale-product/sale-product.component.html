@@ -1,11 +1,11 @@
 <!-- app.component.html -->
 <div class="container mt-3">
   <h2>Venta Producto</h2>
-  <form class="card p-3" [formGroup]="form" (submit)="onSubmit()">
+  <form class="card p-3 mt-3" [formGroup]="form" (submit)="onSubmit()">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Imagen:</label>
+          <h4>Imagen:</h4>
           <div
             style="
               max-width: 500px;
@@ -151,9 +151,9 @@
               id="flexCheckDefault"
               (click)="prestamoBuy($event)"
             />
-            <label class="form-check-label" for="flexCheckDefault">
+            <h5 class="form-check-label" for="flexCheckDefault">
               ¿Prestamo?
-            </label>
+            </h5>
           </div>
         </div>
       </div>

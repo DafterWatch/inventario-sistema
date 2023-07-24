@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-4 mt-4">
+    <h2>Resumen Ganancias</h2>
+  </div>
+  <div class="row">
+    <div class="col">
+      <label for="selectMes">Mes:</label>
+      <select class="form-select" id="selectMes" [(ngModel)]="mesSeleccionado" (change)="filtrarFecha()">
+        <option *ngFor="let mes of meses" [value]="mes.numero">{{ mes.nombre }}</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="selectAnio">Año:</label>
+      <select class="form-select" id="selectAnio" [(ngModel)]="anioSeleccionado" (change)="filtrarFecha()">
+        <option *ngFor="let anio of anios" [value]="anio">{{ anio }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="mt-3" *ngIf="list && list.length > 0">
+    <div class="form-group">
+      <h4>Ganancia Total:</h4>
+      <p>{{ totalGananciaMes }} Bs</p>
+    </div>
+  </div>
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col">Producto</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio Unidad</th>
+        <th scope="col">Total</th>
+        <th scope="col">Monto Cancelado</th>
+        <th scope="col">Fecha Venta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let buy of list">
+        <td>{{ buy.name }}</td>
+        <td>{{ buy.quantity }} Unidades</td>
+        <td>{{ buy.price }} Bs</td>
+        <td>{{ buy.quantity * buy.price }} Bs</td>
+        <td>{{ buy.montpayed }} Bs</td>
+        <td>{{ buy.datebuy | date:'dd-MM-yyyy' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row" *ngIf="!list || !list.length">
+    <div class="col-md-12">
+      <p>No se encontraron ventas.</p>
+    </div>
+  </div>
+</div>

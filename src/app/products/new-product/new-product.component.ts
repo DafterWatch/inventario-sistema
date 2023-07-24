@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class NewProductComponent implements OnInit {
   form: FormGroup;
+  title = 'Registrar Nuevo Producto'
   name = '';
   imageUrl = '';
   description = '';
@@ -40,9 +41,11 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.title = 'Registrar Nuevo Producto'
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isNew = false;
+      this.title = 'Editar Producto'
       this.http.get(environment.apiEndpoint + '/products/' + id).subscribe(
         (response: any) => {
           // Manejar la respuesta del servidor
