@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  // production: true,
-  // apiEndpoint: 'https://inventario-sistema-backend-production.up.railway.app',
-  production: false,
-  apiEndpoint: 'http://localhost:3000',
+  production: true,
+  apiEndpoint: 'https://inventario-sistema-backend-production.up.railway.app',
+  // production: false,
+  // apiEndpoint: 'http://localhost:3000',
 };
 
 /*
