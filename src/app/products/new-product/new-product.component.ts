@@ -19,7 +19,7 @@ export class NewProductComponent implements OnInit {
   form: FormGroup;
   title = 'Registrar Nuevo Producto'
   name = '';
-  imageUrl = '';
+  imageurl = '';
   description = '';
   quantity = 0;
   price = 0;
@@ -52,7 +52,7 @@ export class NewProductComponent implements OnInit {
           this.form.patchValue({
             id: response.id,
             name: response.name,
-            imageurl: response.imageUrl,
+            imageurl: response.imageurl,
             description: response.description,
             quantity: response.quantity,
             price: response.price,

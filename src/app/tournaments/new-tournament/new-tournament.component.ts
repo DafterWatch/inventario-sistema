@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class NewTournamentComponent implements OnInit {
   form: FormGroup;
   name = '';
-  imageUrl = '';
+  imageurl = '';
   description = '';
   quantity = 0;
   price = 0;

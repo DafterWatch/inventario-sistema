@@ -22,7 +22,7 @@ import { Client } from 'src/app/clients/client';
 export class SaleProductComponent implements OnInit {
   form: FormGroup;
   name = '';
-  imageUrl = '';
+  imageurl = '';
   description = '';
   quantity = 0;
   price = 0;
@@ -44,11 +44,11 @@ export class SaleProductComponent implements OnInit {
       price: [0],
       montPayed: [
         0,
-        [Validators.required, Validators.min(0), Validators.pattern(/^\d+$/)],
+        [Validators.required, Validators.min(0)],
       ],
       quantityToBuy: [
         0,
-        [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)],
+        [Validators.required, Validators.min(1)],
       ],
       idclient: [0],
       nameclient: "",
@@ -69,7 +69,7 @@ export class SaleProductComponent implements OnInit {
           this.form.patchValue({
             id: response.id,
             name: response.name,
-            imageurl: response.imageUrl,
+            imageurl: response.imageurl,
             description: response.description,
             quantity: response.quantity,
             price: response.price,

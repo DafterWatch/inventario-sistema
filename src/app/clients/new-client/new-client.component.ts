@@ -14,7 +14,7 @@ export class NewClientComponent implements OnInit {
   form: FormGroup;
   title = 'Registrar Nuevo Cliente'
   name = '';
-  imageUrl = '';
+  imageurl = '';
   description = '';
   quantity = 0;
   isNew: boolean = true;

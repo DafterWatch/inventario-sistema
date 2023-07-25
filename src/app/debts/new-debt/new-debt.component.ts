@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class NewDebtComponent implements OnInit {
   form: FormGroup;
   name = '';
-  imageUrl = '';
+  imageurl = '';
   description = '';
   quantity = 0;
   price = 0;
@@ -50,8 +50,8 @@ export class NewDebtComponent implements OnInit {
             id: response.id,
             idclient: response.idclient,
             idproduct: response.idproduct,
-            debtamount: parseInt(response.debtamount),
-            paidamount: parseInt(response.paidamount),
+            debtamount: parseFloat(response.debtamount),
+            paidamount: parseFloat(response.paidamount),
             idbuy: parseInt(response.idbuy),
             nameclient: response.nameclient,
             lastname: response.lastname,

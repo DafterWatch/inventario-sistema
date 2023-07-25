@@ -93,9 +93,6 @@
           <div *ngIf="form.controls.quantityToBuy.errors?.min">
             La cantidad debe ser mayor a 0.
           </div>
-          <div *ngIf="form.controls.quantityToBuy.errors?.pattern">
-            La cantidad debe ser un número entero sin decimales.
-          </div>
         </div>
         <div class="form-group mt-1 mb-1">
           <h4>Monto Cancelado:</h4>
@@ -121,9 +118,6 @@
           </div>
           <div *ngIf="form.controls.montPayed.errors?.min">
             El monto cancelado debe ser minimo 0 bs.
-          </div>
-          <div *ngIf="form.controls.montPayed.errors?.pattern">
-            El monto cancelado debe ser un número entero sin decimales.
           </div>
         </div>
         <div class="d-flex justify-content-between">
